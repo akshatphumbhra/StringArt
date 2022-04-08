@@ -1,5 +1,5 @@
 class Parameters:
-    image = "cat.jpg"
+    image = "imgs/cat.jpg"
     size = 3000
     numStrings = 4000
     lineWeight = 1 # DON'T SET TO 0

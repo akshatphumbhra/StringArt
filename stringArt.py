@@ -1,6 +1,3 @@
-from skimage.transform import resize
-from skimage.color import rgb2gray
-from skimage.draw import line
 import numpy as np 
 from PIL import Image, ImageDraw
 import math
@@ -8,7 +5,7 @@ from parameters import Parameters
 import helpers
 from postscript import PostScript
 
-
+# Function that loads the image from the given image path, converts to grayscale and transpose for further computation
 def getImage():
     size = (Parameters.size+1, Parameters.size+1)
     img = Image.open(Parameters.image).convert("L")
@@ -26,7 +23,7 @@ def processImage(img):
     # helpers.imshow(sigmoid_img)
     return sigmoid_img
 
-
+# Function that generates hook coordinates based on the size of our canvas
 def generateHooks():
     radius = Parameters.size/2
     n = Parameters.numHooks
@@ -116,6 +113,9 @@ def growOldWithMe(img, hooks):
     
     return lines
 
+# The main greedy algorithm
+# This finds the darkest line in each iteration and adds it to our final portrait
+# Then it whites out the darkest line to prevent re-adding it. 
 def generateLinesFromHooks(img, hooks):
     curHook = 1
     hookSkip = Parameters.hookSkip
@@ -173,6 +173,9 @@ def generateLinesFromHooks(img, hooks):
     
     return lines, hookOrder
 
+# Function that accepts a text file with a list of comma separated hook indices. 
+# Generates a string portrait based on hook order provided.
+# Can be used with generateHookOrder to prevent recalculation and save portrait lines.
 def readLinesFromFile(filename, hooks):
     lines = []
     with open(filename, 'r') as f:
@@ -181,12 +184,15 @@ def readLinesFromFile(filename, hooks):
     for i in range(len(hookOrder)-1):
         lines.append((hooks[hookOrder[i]], hooks[hookOrder[i+1]]))
     return lines
-        
+
+# Generates a text file with a comma separated list of hooks in the order that the string passes through them
+# Can be used to create a physical version of the portrait or to save line calculations.
 def generateHookOrder(hookOrder):
     with open ("hookOrder.txt", 'w') as f:
-        order = hookOrder.join(' ')
+        order = hookOrder.join(',')
         f.write(order)
 
+# Generates a png image based on the lines inputted 
 def createStringImage(lines, filename='-string'):
     size = (Parameters.size+1, Parameters.size+1)
     output = Image.new('L', size, color=255)
@@ -195,6 +201,7 @@ def createStringImage(lines, filename='-string'):
         addLine.line((line[0][0], line[0][1], line[1][0], line[1][1]), fill=0, width=0)
     output.save(Parameters.image.split('.')[0] + filename + ".png")
 
+# Generates a PostScript file based on the lines inputted
 def generatePostScriptFile(lines, filename='-string'):
     s = Parameters.size - 1
     file = PostScript(Parameters.image.split('.')[0] + filename + ".eps", Parameters.size, Parameters.size)

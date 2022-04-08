@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-
+# https://www.geeksforgeeks.org/bresenhams-line-generation-algorithm/
 def bresenhamLine(start, end):
     start = list(start)
     end = list(end)
@@ -50,6 +50,7 @@ def bresenhamLine(start, end):
 
     return path
 
+# Variation of the bresenham line algorithm
 def bresenhamCircle(radius):
     # init vars
     switch = 3 - (2 * radius)
@@ -82,6 +83,7 @@ def bresenhamCircle(radius):
         x = x + 1
     return points
 
+# Creates progress bar on command line during runtime get an estimate of how long the program will run for
 def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
     """
     Call in a loop to create terminal progress bar
