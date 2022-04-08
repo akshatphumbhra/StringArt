@@ -1,0 +1,37 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 100 100
+
+50 50 translate
+
+1 setlinejoin
+1 setlinecap
+
+/circle { 4 dict begin
+	
+    /lw exch def
+    % The bigger this size, the smaller the inner circle will be
+	/size exch def 
+	/n exch def
+	/r exch def
+
+    0 0 r 0 360 arc
+    stroke 
+	lw setlinewidth
+	/angle 360 n div def
+	1 1 n{
+		/i exch def
+		/x1 angle i mul cos r mul def
+		/y1 angle i mul sin r mul def
+		/x2 angle i size add mul cos r mul def
+		/y2 angle i size add mul sin r mul def
+		x1 y1 moveto
+		x2 y2 lineto 
+		stroke
+	}for
+} def
+
+50 30 20 1 circle
+%90 rotate
+%24 30 20 1 circle
+showpage
+%EOF

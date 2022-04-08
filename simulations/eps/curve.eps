@@ -1,0 +1,22 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 100 100
+
+50 50 translate
+
+1 setlinejoin
+1 setlinecap
+
+/size 100 def
+/scale 10 def
+/n size scale div def
+
+1 1 n{
+/i exch def
+/start i scale mul def
+0 start moveto
+size scale add start sub 0 lineto
+stroke
+}for 
+
+showpage
+%EOF

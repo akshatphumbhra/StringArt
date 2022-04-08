@@ -1,0 +1,101 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 400 400
+
+1 setlinejoin
+1 setlinecap
+
+newpath
+  0 0 moveto
+  0 400 lineto
+  400 400 lineto
+  400 0 lineto
+  closepath
+  fill
+
+50 50 translate
+
+/circle { 4 dict begin
+	
+    /lw exch def
+    % The bigger this size, the smaller the inner circle will be
+	/size exch def 
+	/n exch def
+	/r exch def
+
+	lw setlinewidth
+	/angle 360 n div def
+	1 1 n{
+		/i exch def
+		/x1 angle i mul cos r mul def
+		/y1 angle i mul sin r mul def
+		/x2 angle i size add mul cos r mul def
+		/y2 angle i size add mul sin r mul def
+
+		1 0.77 0 setrgbcolor
+		x1 y1 moveto
+		x2 y2 lineto 
+		stroke
+	}for
+} def
+
+/size 100 def
+/scale 10 def
+/n size scale div def
+
+/curve { 6 dict begin
+	/b exch def 
+	/g exch def
+	/r exch def
+	/lw exch def
+	/scale exch def
+	/size exch def
+	/n size scale div def
+	lw setlinewidth
+	r g b setrgbcolor
+	0 0 moveto
+	0 size lineto 
+	stroke
+	0 0 moveto
+	size 0 lineto
+	stroke
+	1 1 n{
+		/i exch def
+		/start i scale mul def
+		0 start moveto
+		size scale add start sub 0 lineto
+		stroke
+	}for
+}def
+
+/diamond{
+100 10 0.5 1 0.77 0 curve
+90 rotate
+100 10 0.5 1 0.77 0 curve
+90 rotate
+100 10 0.5 1 0.77 0 curve
+90 rotate
+100 10 0.5 1 0.77 0 curve
+} def 
+
+100 10 0.5 0.35 0.08 0.27 curve
+
+200 0 translate
+90 rotate
+100 10 0.5 0.58 0.01 0.24 curve
+
+200 200 translate 
+180 rotate
+100 10 0.5 0.79 0 0.20 curve
+
+0 200 translate
+270 rotate
+100 10 0.5 1 0.34 0.16 curve
+
+100 100 translate 
+
+diamond
+45 rotate
+diamond
+
+showpage
+%EOF
